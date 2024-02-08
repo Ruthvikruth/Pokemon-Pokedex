@@ -24,21 +24,17 @@ const HomePage: FC = () => {
     return (<h1>Can't load content!</h1>)
   }
 
-  const handleClick = (buttonId) => {
-    localStorage.key = buttonId;
-  };
-
   return (
     <div className="text-center">
       <h3 className="text-4xl font-bold my-2">Pokemon Listing Page<br></br><br></br></h3>
       <div className='pokemon-cards'>
         {
           jsonData.slice(0, 20).map( (pokemon, index) => (
-          <div class="card" id={index}>
+          <div class="card" id={index.toString()}>
               <img style={imageStyle} className="card-img-top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`} alt="Card image cap"/>
               <div className="card-body">
                 <h5 className="card-title">Name: {strCapitalize(pokemon.name)}</h5>
-                <Link onClick={() => handleClick({index})} className="btn btn-primary" to={`detailsOnclick/${index}`}>Know More</Link>
+                <Link className="btn btn-primary" to={`${index + 1}`}>Know More</Link>
             </div>
           </div>
         ))
