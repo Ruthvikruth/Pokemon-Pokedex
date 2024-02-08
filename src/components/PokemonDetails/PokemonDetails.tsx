@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom';
 
 const PokemonDetails: FC = () => {
 
-  // const id = useParams();
-  const id = localStorage.key;
-  let [pokemonData, setPokemonData] = useState('');
+  const id = useParams();
+  console.log(id.id);
+  let x = id.id;
+  console.log(x)
 
-  let pokemanpath = "https://pokeapi.co/api/v2/pokemon/" + (JSON.parse((JSON.stringify(id)))).index;
-  useEffect(() => {
-    fetch(pokemanpath).then(response => response.json()).then(data => {
-      setPokemonData(pokemonData);
+  const [pokemonData, setPokemonData] = useState<Array | null>(null);
+  useEffect( () => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${x}`).then(response => response.json()).then(data => {
+      console.log(data);
+      setPokemonData(data);
     });
   }, []);
 
@@ -22,9 +24,15 @@ const PokemonDetails: FC = () => {
   return (
     <div className="text-center">
       <h3 className="text-4xl font-bold my-2">Pokemon Details page</h3>
+      <h4>Attacks: </h4>
       <div className='details'>
-          <h1>{pokemanpath}</h1>
-          <h1>{pokemonData}</h1>
+          {
+            pokemonData.abilities.map( data => (
+            <h1>{data.ability.name}</h1>
+            ))
+          }
+          <br></br><h4>Base Experience: {pokemonData.base_experience}</h4>
+          <br></br><h4>Base Height: {pokemonData.height}</h4>
       </div>
     </div>
   );
